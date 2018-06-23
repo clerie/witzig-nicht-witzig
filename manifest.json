@@ -4,7 +4,7 @@
   "name": "Witzig! -  Nicht Witzig!",
   "version": "0.1",
 
-  "description": "Replaces the thumb up and down in YouTube with an Witzig! and Nicht Witzig! stamp.",
+  "description": "Replaces the thumb up and down in YouTube with a Witzig! and a Nicht Witzig! stamp.",
 
   "icons": {
     "48": "icons/witzig-48.png"
@@ -22,7 +22,6 @@
   ],
 
   "web_accessible_resources": [
-    "media/stempel-witzig.png",
     "media/sticker-witzig.png",
     "media/sticker-nicht-witzig.png"
   ]
