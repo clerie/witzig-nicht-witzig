@@ -54,9 +54,9 @@ function inject() {
   log("Stempelfläche vergrößert.");
   var image_container_object = document.querySelectorAll(image_container_path);
   log("Packe Stempel aus...");
-  inject_image(image_container_object[0], getURL("media/sticker-witzig.png"));
+  inject_image(image_container_object[0], getURL("media/stempel-witzig.png"));
   log("Witzig!");
-  inject_image(image_container_object[1], getURL("media/sticker-nicht-witzig.png"));
+  inject_image(image_container_object[1], getURL("media/stempel-nicht-witzig.png"));
   log("Nicht Witzig!");
 }
 
