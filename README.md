@@ -15,7 +15,7 @@ Die Installation besteht nur während der aktuellen Session.
 ### Als Installationsdatei
 1. `git clone https://github.com/clerie/witzig-nicht-witzig.git`
 2. `cd witzig-nicht-witzig/`
-3. `zip -r -FS ../witzig-nicht-witzig.zip *`
+3. `zip -r -FS ../witzig-nicht-witzig.zip * -x README.md`
 4. ZIP Datei signieren lassen: https://addons.mozilla.org/en-US/developers/addon/submit/distribution
 5. Unter `about:addons` manuell hinzufügen
 
