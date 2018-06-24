@@ -20,6 +20,10 @@ function log(msg) {
   console.log("W!NW!: " + msg);
 }
 
+function getURL(path) {
+  return chrome.runtime.getURL(path) || browser.runtime.getURL(path);
+}
+
 /*
 Grafikfunktionen
 */
@@ -50,9 +54,9 @@ function inject() {
   log("Stempelfläche vergrößert.");
   var image_container_object = document.querySelectorAll(image_container_path);
   log("Packe Stempel aus...");
-  inject_image(image_container_object[0], browser.extension.getURL("media/sticker-witzig.png"));
+  inject_image(image_container_object[0], getURL("media/sticker-witzig.png"));
   log("Witzig!");
-  inject_image(image_container_object[1], browser.extension.getURL("media/sticker-nicht-witzig.png"));
+  inject_image(image_container_object[1], getURL("media/sticker-nicht-witzig.png"));
   log("Nicht Witzig!");
 }
 

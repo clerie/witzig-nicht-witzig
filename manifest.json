@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "Witzig! - Nicht Witzig!",
-  "version": "0.3",
+  "version": "0.4",
 
   "description": "Replaces the thumb up and down in YouTube with a Witzig! and a Nicht Witzig! stamp.",
 
