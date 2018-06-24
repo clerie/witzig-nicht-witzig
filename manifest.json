@@ -22,10 +22,10 @@
   ],
 
   "web_accessible_resources": [
-    "media/sticker-witzig.png",
-    "media/sticker-witzig-disabled.png",
-    "media/sticker-nicht-witzig.png",
-    "media/sticker-nicht-witzig-disabled.png"
+    "media/stempel-witzig.png",
+    "media/stempel-witzig-disabled.png",
+    "media/stempel-nicht-witzig.png",
+    "media/stempel-nicht-witzig-disabled.png"
   ]
 
 }
