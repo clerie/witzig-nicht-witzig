@@ -27,6 +27,10 @@ function getURL(path) {
   return chrome.runtime.getURL(path) || browser.runtime.getURL(path);
 }
 
+function onError(error) {
+  log(`Error: ${error}`);
+}
+
 /*
 Grafikfunktionen
 */
@@ -50,7 +54,7 @@ Hauptfunktion
 */
 
 // Ersetzt die Daumen durch Stempel
-function inject() {
+function inject(settings) {
   var container_object = document.querySelectorAll(container_path);
   resize_container(container_object[0], "100px");
   resize_container(container_object[1], "100px");
@@ -59,7 +63,7 @@ function inject() {
   log("Packe Stempel aus...");
 
   // wenn Like aktiv, zeige aktive Grafik an
-  if(container_object[0].classList.contains('style-default-active')) {
+  if(container_object[0].classList.contains('style-default-active') || settings.light) {
     inject_image(image_container_object[0], getURL("media/stempel-witzig.png"));
   }
   else {
@@ -68,7 +72,7 @@ function inject() {
   log("Witzig!");
 
   // wenn Dislike aktiv, zeige aktive Grafik an
-  if(container_object[1].classList.contains('style-default-active')) {
+  if(container_object[1].classList.contains('style-default-active') || settings.light) {
     inject_image(image_container_object[1], getURL("media/stempel-nicht-witzig.png"));
   }
   else {
@@ -79,7 +83,7 @@ function inject() {
 
 // Warte noch kurz vor dem einfügen
 function inject_with_timeout() {
-  setTimeout(inject, 10);
+  setTimeout(function () {inject({light: false})}, 10);
 }
 
 /*
@@ -96,7 +100,7 @@ function inject_loop () {
   current_url = window.location.href;
   if(current_url != last_loaded_url) {
     log("Neues");
-    setTimeout(inject, 500);
+    setTimeout(function () {inject({light: false})}, 500);
     last_loaded_url = current_url;
   }
 
@@ -106,23 +110,33 @@ function inject_loop () {
 // Die YouTube Website läd die Inhalte durch ein externes JavaScript, wenn wir von vornherein unsere eigenen Inhalte einsetzen, werden diese später von YouTube wieder überschrieben. Wir schauen also, ob ein bestimmtes Objekt, dass durch JavaScript eingefügt wird, exstiert, dann erst bringen wir unsere eigenen Inhalte ein.
 var loaded = false;
 
-function loading() {
+function loading(settings) {
   loaded = document.querySelector(load_end_check_path);
   if (loaded) {
     log("Stempelfläche gefunden.");
-    // initialisiere onclick events
-    link_object = document.querySelectorAll(link_path);
-    link_object[0].onclick = inject_with_timeout;
-    link_object[1].onclick = inject_with_timeout;
 
-    // starte Schleife, die nach aktualisierungen ausschau hält
-    inject_loop();
+    if(!settings.light) {
+      // initialisiere onclick events
+      link_object = document.querySelectorAll(link_path);
+      link_object[0].onclick = inject_with_timeout;
+      link_object[1].onclick = inject_with_timeout;
+
+      // starte Schleife, die nach aktualisierungen ausschau hält
+      inject_loop();
+    }
+    else {
+      inject(settings);
+    }
+
+
   }
   else {
-    setTimeout(loading, 500);
+    setTimeout(function () {loading(settings)}, 500);
   }
 }
 
 // Starte das Add-on
 log("Suche Stempelfläche...");
-loading();
+// lade Einstellungen
+var getting = browser.storage.local.get("light");
+getting.then(loading, onError);

@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "Witzig! - Nicht Witzig!",
-  "version": "1.1",
+  "version": "1.2",
 
   "description": "Replaces the thumb up and down in YouTube with a Witzig! and a Nicht Witzig! stamp.",
   "homepage_url": "https://github.com/clerie/witzig-nicht-witzig/",
@@ -24,6 +24,12 @@
 
   "web_accessible_resources": [
     "media/*"
-  ]
+  ],
+
+  "options_ui": {
+    "page": "settings/index.html"
+  },
+
+  "permissions": ["storage"]
 
 }
