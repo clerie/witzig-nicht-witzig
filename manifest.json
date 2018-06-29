@@ -5,7 +5,7 @@
   "version": "1.1",
 
   "description": "Replaces the thumb up and down in YouTube with a Witzig! and a Nicht Witzig! stamp.",
-
+  "homepage_url": "https://github.com/clerie/witzig-nicht-witzig/",
   "icons": {
     "73": "media/icon-witzig-73.png",
     "228": "media/icon-witzig-228.png"
