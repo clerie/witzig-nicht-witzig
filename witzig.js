@@ -54,9 +54,19 @@ function inject() {
   log("Stempelfläche vergrößert.");
   var image_container_object = document.querySelectorAll(image_container_path);
   log("Packe Stempel aus...");
-  inject_image(image_container_object[0], getURL("media/stempel-witzig.png"));
+  if(container_object[0].classList.contains('style-default-active')) {
+    inject_image(image_container_object[0], getURL("media/stempel-witzig.png"));
+  }
+  else {
+    inject_image(image_container_object[0], getURL("media/stempel-witzig-disabled.png"));
+  }
   log("Witzig!");
-  inject_image(image_container_object[1], getURL("media/stempel-nicht-witzig.png"));
+  if(container_object[1].classList.contains('style-default-active')) {
+    inject_image(image_container_object[1], getURL("media/stempel-nicht-witzig.png"));
+  }
+  else {
+    inject_image(image_container_object[1], getURL("media/stempel-nicht-witzig-disabled.png"));
+  }
   log("Nicht Witzig!");
 }
 

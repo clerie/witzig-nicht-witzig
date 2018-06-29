@@ -23,10 +23,7 @@
   ],
 
   "web_accessible_resources": [
-    "media/stempel-witzig.png",
-    "media/stempel-witzig-disabled.png",
-    "media/stempel-nicht-witzig.png",
-    "media/stempel-nicht-witzig-disabled.png"
+    "media/*"
   ]
 
 }
