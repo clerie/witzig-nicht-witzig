@@ -11,6 +11,9 @@ const image_container_path = 'html body ytd-app div#content.style-scope.ytd-app 
 // CSS Pfad, der das Objekt, das die Daumen beinhaltet, beschriebt, um den Bereicht, in dem sich die Grafiken für die Objekte ausbreiten können, zu vergößern
 const container_path = 'html body ytd-app div#content.style-scope.ytd-app ytd-page-manager#page-manager.style-scope.ytd-app ytd-watch.style-scope.ytd-page-manager.hide-skeleton div#top.style-scope.ytd-watch div#container.style-scope.ytd-watch div#main.style-scope.ytd-watch div#info.style-scope.ytd-watch div#info-contents.style-scope.ytd-watch ytd-video-primary-info-renderer.style-scope.ytd-watch div#container.style-scope.ytd-video-primary-info-renderer div#info.style-scope.ytd-video-primary-info-renderer div#menu-container.style-scope.ytd-video-primary-info-renderer div#menu.style-scope.ytd-video-primary-info-renderer ytd-menu-renderer.style-scope.ytd-video-primary-info-renderer div#top-level-buttons.style-scope.ytd-menu-renderer ytd-toggle-button-renderer.style-scope.ytd-menu-renderer.force-icon-button a.yt-simple-endpoint.style-scope.ytd-toggle-button-renderer yt-icon-button#button.style-scope.ytd-toggle-button-renderer';
 
+// Css Pfad, der beschreibt, von wo aus clicks zum ändern der Likes interprätiert werden sollen
+const link_path = 'html body ytd-app div#content.style-scope.ytd-app ytd-page-manager#page-manager.style-scope.ytd-app ytd-watch.style-scope.ytd-page-manager.hide-skeleton div#top.style-scope.ytd-watch div#container.style-scope.ytd-watch div#main.style-scope.ytd-watch div#info.style-scope.ytd-watch div#info-contents.style-scope.ytd-watch ytd-video-primary-info-renderer.style-scope.ytd-watch div#container.style-scope.ytd-video-primary-info-renderer div#info.style-scope.ytd-video-primary-info-renderer div#menu-container.style-scope.ytd-video-primary-info-renderer div#menu.style-scope.ytd-video-primary-info-renderer ytd-menu-renderer.style-scope.ytd-video-primary-info-renderer div#top-level-buttons.style-scope.ytd-menu-renderer ytd-toggle-button-renderer.style-scope.ytd-menu-renderer.force-icon-button a.yt-simple-endpoint.style-scope.ytd-toggle-button-renderer';
+
 /*
 Hilfsfunktionen
 */
@@ -54,6 +57,8 @@ function inject() {
   log("Stempelfläche vergrößert.");
   var image_container_object = document.querySelectorAll(image_container_path);
   log("Packe Stempel aus...");
+
+  // wenn Like aktiv, zeige aktive Grafik an
   if(container_object[0].classList.contains('style-default-active')) {
     inject_image(image_container_object[0], getURL("media/stempel-witzig.png"));
   }
@@ -61,6 +66,8 @@ function inject() {
     inject_image(image_container_object[0], getURL("media/stempel-witzig-disabled.png"));
   }
   log("Witzig!");
+
+  // wenn Dislike aktiv, zeige aktive Grafik an
   if(container_object[1].classList.contains('style-default-active')) {
     inject_image(image_container_object[1], getURL("media/stempel-nicht-witzig.png"));
   }
@@ -70,9 +77,31 @@ function inject() {
   log("Nicht Witzig!");
 }
 
+// Warte noch kurz vor dem einfügen
+function inject_with_timeout() {
+  setTimeout(inject, 10);
+}
+
 /*
 Ladefunktion
 */
+
+// regelmäßig prüfen, ob sich die URL geändert hat und entsprechend den Like Status aktualisieren
+var current_url = '';
+var last_loaded_url = '';
+
+var link_object = '';
+
+function inject_loop () {
+  current_url = window.location.href;
+  if(current_url != last_loaded_url) {
+    log("Neues");
+    setTimeout(inject, 500);
+    last_loaded_url = current_url;
+  }
+
+  setTimeout(inject_loop, 500);
+}
 
 // Die YouTube Website läd die Inhalte durch ein externes JavaScript, wenn wir von vornherein unsere eigenen Inhalte einsetzen, werden diese später von YouTube wieder überschrieben. Wir schauen also, ob ein bestimmtes Objekt, dass durch JavaScript eingefügt wird, exstiert, dann erst bringen wir unsere eigenen Inhalte ein.
 var loaded = false;
@@ -81,11 +110,16 @@ function loading() {
   loaded = document.querySelector(load_end_check_path);
   if (loaded) {
     log("Stempelfläche gefunden.");
-    inject();
+    // initialisiere onclick events
+    link_object = document.querySelectorAll(link_path);
+    link_object[0].onclick = inject_with_timeout;
+    link_object[1].onclick = inject_with_timeout;
+
+    // starte Schleife, die nach aktualisierungen ausschau hält
+    inject_loop();
   }
   else {
-    log("Hier nicht.");
-    setTimeout(loading, 100);
+    setTimeout(loading, 500);
   }
 }
 

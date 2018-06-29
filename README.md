@@ -5,6 +5,10 @@ Dieses Firefox Plugin ersetzt die Daumen in YouTube getreu dem Känguru durch Wi
 
 # Installation
 ## Firefox
+### Aus Firefox Add-ons (Empfohlen)
+Einfach zu Firefox hinzufügen:
+https://addons.mozilla.org/de/firefox/addon/witzig-nicht-witzig/
+
 ### Als Entwicklerversion
 1. Herunterladen
 2. Entpacken
